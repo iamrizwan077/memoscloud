@@ -20,7 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 import os
-SECRET_KEY = os.getenv("SECRET_KEY")
+#SECRET_KEY = os.getenv("SECRET_KEY")
+
+SECRET_KEY = 'django-insecure-l36ov35x6^#(b3v0zf0up_9p_wz=5)f&mzgczn9+qa63fyrv5_'
 
 if SECRET_KEY is None:
   print("Please setup a SECRET_KEY in the Secrets (Environment variables) tab. See README.md for more.")
@@ -88,7 +90,7 @@ DATABASES = {
         'PORT': 5432
     }
 }
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -99,7 +101,18 @@ DATABASES = {
         'PORT': 5432,
     }
 }
-
+"""
+DATABASES={
+  'default':{
+    'ENGINE':'djongo',
+    'NAME':'MemosCloud',
+    'CLIENT':{
+      'host':'mongodb+srv://iamrizwan077:rabiariaz@memoscloud.rx4omc9.mongodb.net/test',
+      'username':'iamrizwan077',
+      'password':'rabiariaz'
+    }    
+  }
+}
 
 
 # Password validation

@@ -1,5 +1,6 @@
 import "./styles.css";
 import NavFoot from "./NavFoot";
+import React  from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Gallery from "./Gallery";
 import Landing from "./Landing";
