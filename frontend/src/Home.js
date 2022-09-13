@@ -12,8 +12,8 @@ const Home = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const img = URL.createObjectURL(file);
-    console.log(img);
-    const url = "https://memoscloud.rizwanriaz.repl.co/api/home";
+  //  console.log(img);
+    const url = "http://127.0.0.1:8000/api/home";
     //   const data ={
     //    'name': file.name,
     //  'image': img
@@ -21,10 +21,11 @@ const Home = () => {
     //  const json_data = JSON.stringify(data)
     //  console.log(json_data)
 
+    
     const formData = new FormData();
     if (file !== null) {
       formData.append("name", file.name);
-      formData.append("image", url);
+      formData.append("image", img);
       console.log(formData);
     }
     //  const config = {

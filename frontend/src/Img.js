@@ -1,14 +1,20 @@
 import React from "react";
 
-const Img = ({ name }) => {
-  console.log("Data is", name);
+const Img = ( {name,image} ) => {
+  console.log("Data is", {name});
+  console.log("imgData is", {image});
+  let pic = 
+  <img
+  src={image}
+    alt=""
+    style={{ width: 400, height: 400, padding: "40px" }}
+  />;
+  console.log(pic)
+
+  //console.log("imgurlData is", URL.createObjectURL(image));
   return (
     <div>
-      <img
-        src={name}
-        alt=""
-        style={{ width: 400, height: 400, padding: "40px" }}
-      />
+      {pic}    
       <div>{name}</div>
     </div>
   );
