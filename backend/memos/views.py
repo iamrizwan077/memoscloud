@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from .models import Gallery
 from .serializers import GallerySerializer
+from django.conf import settings
 import json
 from django.forms.models import model_to_dict
 
@@ -17,7 +18,7 @@ def home(request):
         name = request.POST['name']
         print(name)
         #  name=name.strip('\"')
-        image = request.POST['image']
+        image = request.FILES['image']
         print(image)
         # data={'name'}
         #  image=image.strip('\"')
@@ -74,5 +75,7 @@ def gallery(request):
     #                                   context={'request': request},
     #                                  many=True)
     #   return Response(serializer.data)
-
+        print(settings.MEDIA_ROOT)
+        print(settings.MEDIA_URL)
+        print(settings.BASE_DIR)
     return Response(gallery.data)

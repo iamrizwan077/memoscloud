@@ -25,7 +25,7 @@ const Home = () => {
     const formData = new FormData();
     if (file !== null) {
       formData.append("name", file.name);
-      formData.append("image", img);
+      formData.append("image", file);
       console.log(formData);
     }
     //  const config = {
