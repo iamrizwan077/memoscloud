@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css"
 import Img from "./Img.js";
 
 const Gallery = () => {
   const [gallery, setGallery] = useState([])
+  const [modal, setModal] = useState(false)
   const reader = new FileReader()
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/gallery/")
@@ -15,7 +18,13 @@ const Gallery = () => {
 
   }, [])
 
-
+  const handleModal = (e,key) => {
+    console.log(modal)
+    setModal(!modal)
+    console.log(modal)
+    console.log(key)
+    return key
+  }
 
 
 
@@ -54,17 +63,26 @@ const Gallery = () => {
 //  display(data)
 {*/}
   return (
+  <div>
     <div className="grid-cols-3 grid gap-2 mx-2 my-2">
       {
-        gallery.map(image => (
-          <div key={image.id} className="m-4 ">
+        gallery.map((image,key) => (
+          <div key={key} className="m-4 " onClick={e=>handleModal(e, key)}>
             <img className="w-full h-full" src={`http://localhost:8000${image.image}`} /> 
             <div className="truncate">{image.name}</div>
+            
           </div>
 
         ))
+      
       }
-
+      {/*}
+      {modal && <Lightbox
+        imageTitle={gallery[1].name}
+        mainSrc={`http://localhost:8000${.image}`}
+        onCloseRequest={() => setModal(false)}
+      />}
+  {*/}
       {/*}
       <div>
         {
@@ -91,6 +109,14 @@ const Gallery = () => {
       <Img val="https://images.unsplash.com/photo-1657296950265-e17c3db4e85a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287&q=80" />
       <Img val="https://images.unsplash.com/photo-1657281277237-e1104ff6f18b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
     {*/}
+    </div>
+      { 
+        console.log(gallery, gallery[0])
+      
+      
+      
+      
+      }
     </div>
   );
 };
