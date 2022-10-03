@@ -3,24 +3,32 @@ import { Link } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
 const SignUp = () => {
-  let {signupUser} = useContext(AuthContext)
+  let {signupUser,signupError} = useContext(AuthContext)
   return (
     <div className="flex py-8">
       <div className=" flex flex-col bg-white  shadow-2xl rounded-3xl  border px-12 justify-center mx-auto">
         <div className="font-semibold text-3xl py-6 ">Sign Up</div>
+        
         <form onSubmit={signupUser} className="flex flex-col">
+        {signupError.username && <div className="text-sm mt-2 text-red-700 px-2 py-1">{signupError.username}</div>}
+      
           <input
             className="px-2 py-2 mb-1 border border-gray-400 rounded"
             type="text"
             placeholder="Enter username"
             name="username"
           />
+        
+        {signupError.email && <div className="text-sm mt-2 text-red-700 px-2 py-1">{signupError.email}</div>}
+      
           <input
             className="px-2 mb-1 py-2 border border-gray-400 rounded"
             type="email"
             placeholder="Enter email"
             name="email"
           />
+          {signupError.password && <div className="text-sm mt-2 text-red-700 px-2 py-1">{signupError.password}</div>}
+      
           <input
             className="px-2 mb-1 py-2 border border-gray-400 rounded"
             type="password"

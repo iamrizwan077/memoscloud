@@ -6,11 +6,12 @@ import * as yup from "yup";
 import AuthContext from "./AuthContext";
 
 const Login = () => {
-  let {loginUser} = useContext(AuthContext)
+  let {loginUser, error} = useContext(AuthContext)
   return (
     <div className="flex py-8">
       <div className=" flex flex-col my-8 bg-white  shadow-2xl rounded-3xl  border px-12 justify-center mx-auto">
         <div className="font-semibold text-3xl py-6 ">Sign In</div>
+        {error && <div className="text-sm bg-red-300 text-red-700 px-2 py-1 mb-2">{error.detail}</div>}
         <form onSubmit={loginUser} className="flex flex-col">
           <input
             className="px-2 py-2 mb-1 border border-gray-400 rounded"

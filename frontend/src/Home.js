@@ -1,32 +1,37 @@
 import React, { useState, useContext } from "react";
 import homeimg from "./images/home.png";
 import axios from "axios";
-
+//import LinearProgress from '@mui/material/LinearProgress';
+//import { LinearProgress } from '@mui/material';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import AuthContext from "./AuthContext.js";
 
 const Home = () => {
   let [file, setFile] = useState(null);
   let [fileUploaded, setFileUploaded] = useState(false)
   let [fileInfo, setFileInfo] = useState({})
-  
-  let {authToken} = useContext(AuthContext)
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  let [progress, setProgress] = useState(0)
+
+  let { authToken } = useContext(AuthContext)
   console.log(file)
   let handleChange = (event) => {
     setFile(event.target.files[0]);
     setFileInfo(event.target.files[0])
     setFileUploaded(true)
-  //  console.log("FILEup", fileUploaded);
+    //  console.log("FILEup", fileUploaded);
     //console.log("FILEinf", fileInfo);
 
-  //  console.log("FILE", file);
+    //  console.log("FILE", file);
 
   };
   console.log(file)
-  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const img = URL.createObjectURL(file);
-  //  console.log(img);
+    //  console.log(img);
     const url = "http://127.0.0.1:8000/api/home";
     //   const data ={
     //    'name': file.name,
@@ -35,13 +40,13 @@ const Home = () => {
     //  const json_data = JSON.stringify(data)
     //  console.log(json_data)
 
-    
+
     const formData = new FormData();
     if (file !== null) {
       formData.append("name", file.name);
       formData.append("image", file);
       formData.append("size", file.size);
-  //    console.log(formData);
+      //    console.log(formData);
     }
     //  const config = {
     //   headers: {
@@ -55,8 +60,12 @@ const Home = () => {
       data: formData,
       headers: {
         "content-type": "multipart/form-data",
-        'Authorization': "JWT "+ String(authToken.access),
-      }
+        'Authorization': "JWT " + String(authToken.access),
+      },
+      onUploadProgress: (progressEvent) => {
+        const progress = (progressEvent.loaded / progressEvent.total) * 100;
+        setProgress(progress);
+      },
     })
       .then((response) => {
         console.log(response.data);
@@ -75,36 +84,44 @@ const Home = () => {
           console.log("Error", error.message);
         }
       });
+    await new Promise((resolve) => {
+      setTimeout(() => resolve("success"), 500);
+    });
+    setIsSuccess(true);
+    // setProgress(0);
+
   };
 
   const fileSize = (file) => {
     var file_size;
-    if (file.size > 1000000){
-      file_size = (file.size/1000000).toFixed(1) 
+    if (file.size > 1000000) {
+      file_size = (file.size / 1000000).toFixed(1)
     }
-    else if (file.size > 1000){
-      file_size = (file.size/1000).toFixed(1) 
+    else if (file.size > 1000) {
+      file_size = (file.size / 1000).toFixed(1)
     }
     return file_size
   }
 
   return (
     <div className="opacity-80  relative  text-white">
-     <img className="" src={homeimg} /> 
+      <img className="" src={homeimg} />
       <div className="  absolute inset-2/4 -translate-y-1/2 -translate-x-1/2">
-     
-     
+
+
         <form onSubmit={handleSubmit} method="post" className="flex flex-col  items-center ">
-        <label onChange={e => handleChange( e)} htmlFor="formId">
-          <input type="file"  id="formId" hidden accept="image/*"  />
-          
-          <div><i className="fa-solid fa-cloud-arrow-up  text-9xl flex justify-center"></i>Select files to upload</div>
-        </label>
-        {  fileUploaded && <div className="">
-          <div className="font-bold">Filename: <span className="font-light">{file.name}</span></div>
-          <div className="font-bold">Size: <span className="font-light">{fileSize(file)}{file.size > 1000000 ? "MB" : "KB"}</span></div>
-          <div className="flex justify-center"><button type="submit" className=" bg-[#e06377] px-8 py-3 font-bold  flex justify-center  rounded-md hover:bg-[#c83349]">Upload</button>
-          </div></div>}</form>
+          <label onChange={e => handleChange(e)} htmlFor="formId">
+            <input type="file" id="formId" hidden accept="image/*" />
+
+            <div><i className="fa-solid fa-cloud-arrow-up  text-9xl flex justify-center"></i>Select files to upload</div>
+          </label>
+          {fileUploaded && <div className="">
+            <div classname="my-2"><LinearProgress variant="determinate" value={progress} /></div>
+            <div className="font-bold">Filename: <span className="font-light">{file.name}</span></div>
+            <div className="font-bold">Size: <span className="font-light">{fileSize(file)}{file.size > 1000000 ? "MB" : "KB"}</span></div>
+            <div className="flex justify-center">
+            {isSuccess ? <div className=" bg-[#c83349] px-8 py-3 font-bold  flex justify-center  rounded-md">Uploaded</div> : <button type="submit" className=" bg-[#e06377] px-8 py-3 font-bold  flex justify-center  rounded-md hover:bg-[#c83349]">Upload</button>}
+            </div></div>}</form>
       </div>
     </div>
   );

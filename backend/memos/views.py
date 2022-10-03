@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status,permissions
-from .models import Gallery
+from .models import CustomUser, Gallery
 from .serializers import GallerySerializer, TokenObtainPairSerializer, CustomUserSerializer
 from django.conf import settings
 import json
@@ -60,27 +60,38 @@ class CustomUserCreate(APIView):
 
     def post(self, request, format='json'):
         print(request.data)
-        serializer = CustomUserSerializer(data=request.data)
-        print(serializer)
-        print(serializer.is_valid())
-        if serializer.is_valid():
-            user = serializer.save()
-            if user:
+        print(request.data['username'])
+        print(request.data['email'])
+        #print((request.data['email']).exists())
+     #       if request.data['username'] or request.data['email']
+        
+        already_signed = CustomUser.objects.filter(username=request.data['username'],email=request.data['email']).exists()
+        print(already_signed)
+        if already_signed == False:
+        
+            serializer = CustomUserSerializer(data=request.data)
+            print(CustomUser.objects.all().exists())
+            print(serializer)
+            print(serializer.is_valid())
+            if serializer.is_valid():
+                user = serializer.save()
+
+                if user:
             #    key = settings.SECRET_KEY
             #    algorithm = settings.JWT_ALGORITHM
-                print(request)
+                    print(request)
 
             #    json = rest_framework_simplejwt.views.token_obtain_pair(request)
                 
     #def get_tokens_for_user(user):
-                refreshToken = RefreshToken.for_user(user)
-                accessToken = refreshToken.access_token
+                    refreshToken = RefreshToken.for_user(user)
+                    accessToken = refreshToken.access_token
 
-                decodedToken = jwt.decode(str(accessToken),settings.SECRET_KEY, algorithms=['HS256'])
+                    decodedToken = jwt.decode(str(accessToken),settings.SECRET_KEY, algorithms=['HS256'])
                 #Add payload here
-                decodedToken['username'] = user.username
+                    decodedToken['username'] = user.username
                 
-                encodedToken = jwt.encode(decodedToken,settings.SECRET_KEY, algorithm='HS256')
+                    encodedToken = jwt.encode(decodedToken,settings.SECRET_KEY, algorithm='HS256')
             
             
             
@@ -94,8 +105,8 @@ class CustomUserCreate(APIView):
         #            'access': str(refresh.access_token),#I'm adding the user data in response and not encoding it in jwt
         #            'username':user.username
         #        }
-                print(encodedToken)
-                user_info = {'refresh': str(refreshToken), 'access': encodedToken}
+                    print(encodedToken)
+                    user_info = {'refresh': str(refreshToken), 'access': encodedToken}
                 
     #            token = jwt.encode(
     #                {
@@ -106,8 +117,12 @@ class CustomUserCreate(APIView):
 
     #            json = serializer.data
                 
-                return Response(user_info, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(user_info, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"username": "User already exists"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
 
         #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
@@ -225,14 +240,22 @@ def profile(request):
             print(i.image_size)
             total_storage += i.image_size 
         print(total_storage)
-        if total_storage >= 1_000_000:
-            total_storage =  round(total_storage/1_000_000, 1)
+#        if total_storage >= 1_000_000:
+ #           total_storage =  round(total_storage/1_000_000, 1)
 
+  #          return Response(f"{total_storage}MB")
+        if total_storage < 1000:
+            total_storage =  round(total_storage, 1)
+
+            return Response(f"{total_storage}KB")
+   
+   
+   
         elif total_storage >= 1000:
             total_storage = round(total_storage/1000, 1)
         
+            return Response(f"{total_storage}MB")
         
         
-        return Response(total_storage)
 
 

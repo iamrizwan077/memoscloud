@@ -36,7 +36,7 @@ const Profile = () => {
     <div className='font-bold flex flex-col justify-center text-3xl'>
       <div>Username: {user.username}</div>
       
-      <div>Storage: {storage}{storage < 1000 ? "KB" : "MB"}</div>
+      <div>Storage: {storage}</div>
     </div>}
     
     </div>
