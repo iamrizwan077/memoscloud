@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import img1 from "./images/img1.jpg";
 import HeroImages from "./HeroImages";
 import { Link } from "react-router-dom";
+import AuthContext from "./AuthContext";
+
 
 const Hero = ({ slides }) => {
   const [current, setCurrent] = useState(0);
@@ -13,6 +15,7 @@ const Hero = ({ slides }) => {
     setCurrent(current < 1 ? length - 1 : current - 1);
   };
 
+  let {auth} = useContext(AuthContext)
   return (
     <>
       <div className="w-full ">
@@ -42,11 +45,11 @@ const Hero = ({ slides }) => {
         })}
 
         <div className="absolute  top-2/3 flex left-1/3 right-1/3  pt-12 text-center justify-center  text-base font-semibold">
-          <Link to="/accounts/signin">
+          {auth || <Link to="/accounts/signup">
             <button className=" animate-bounce px-6 mx-1   rounded-md  py-3  hover:bg-[#c83349] bg-[#e06377]">
               Sign In
             </button>
-          </Link>
+          </Link>}
         </div>
       </div>
       <button

@@ -1,26 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "./AuthContext";
 
 const SignUp = () => {
+  let {signupUser} = useContext(AuthContext)
   return (
     <div className="flex py-8">
       <div className=" flex flex-col bg-white  shadow-2xl rounded-3xl  border px-12 justify-center mx-auto">
         <div className="font-semibold text-3xl py-6 ">Sign Up</div>
-        <form onSubmit="" className="flex flex-col">
+        <form onSubmit={signupUser} className="flex flex-col">
           <input
             className="px-2 py-2 mb-1 border border-gray-400 rounded"
             type="text"
             placeholder="Enter username"
+            name="username"
+          />
+          <input
+            className="px-2 mb-1 py-2 border border-gray-400 rounded"
+            type="email"
+            placeholder="Enter email"
+            name="email"
           />
           <input
             className="px-2 mb-1 py-2 border border-gray-400 rounded"
             type="password"
             placeholder="Enter password"
-          />
-          <input
-            className="px-2 mb-1 py-2 border border-gray-400 rounded"
-            type="password"
-            placeholder="Confirm password"
+            name = "password"
           />
           <div>
             <input type="checkbox" className="" name="tc" value="tc" />
@@ -49,7 +54,7 @@ const SignUp = () => {
         </a>
         <div className="text-xs flex justify-center pb-6">
           <span>Already registered?</span>
-          <Link className="text-blue-700 pl-2" to="/accounts/signin">
+          <Link className="text-blue-700 pl-2" to="/accounts/login">
             Login Now
           </Link>
         </div>
