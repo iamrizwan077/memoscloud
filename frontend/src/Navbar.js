@@ -5,18 +5,28 @@ import AuthContext from "./AuthContext";
 
 const Navbar = () => {
 
+  let handleMenu = () => {
+    let menu = document.querySelector("#menu")
+    menu.classList.toggle('hidden')
+    console.log(menu.classList)
+  } 
+
+
   let {auth, logoutUser} = useContext(AuthContext)
   return (
     <>
-      <nav className="flex bg-[#e06377] items-center justify-between py-1 pl-4">
-        <Link to="/" className="text-2xl font-semibold">
+      <nav className="md:flex  bg-[#e06377] items-center justify-between lg:py-1 lg:pl-4">
+        
+        <div className="text-2xl font-semibold flex justify-between  py-2.5 px-4 rounded-md text-2xl bg-[#c83349] md:bg-[#e06377] "><Link to="/">
           MEMOS
         </Link>
-        <ul>
-          <li className="flex font-bold">
+        <i className="fa-solid fa-bars flex md:hidden items-center" onClick={handleMenu}></i></div>
+        
+        <ul className="flex flex-col transition-1000 rounded-md hidden md:block transition-all" id = "menu" >
+          <li className="flex font-bold flex-col md:flex-row divide-y divide-gray-600 md:divide-y-0 rounded-md">
           {auth &&  <>
-            <Link to="/home">
-              <div className="px-6  rounded-md  py-3  hover:bg-[#c83349]">
+            <Link to="/home" className="">
+              <div className="px-6  rounded-md  py-3  hover:bg-[#c83349] ">
                 Home
               </div>
             </Link>

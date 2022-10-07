@@ -104,20 +104,21 @@ const Home = () => {
   }
 
   return (
-    <div className="opacity-80  relative  text-white">
-      <img className="" src={homeimg} />
-      <div className="  absolute inset-2/4 -translate-y-1/2 -translate-x-1/2">
+    <div className="opacity-80 flex  ">
+    {/*}  <img className="flex justify-center  relative  items-center h-screen" src={homeimg} />
+    <div className=" absolute inset-2/4 ">{*/}  
 
+  <div className="  h-screen w-full flex justify-center items-center">
 
-        <form onSubmit={handleSubmit} method="post" className="flex flex-col  items-center ">
+        <form onSubmit={handleSubmit} method="post" className=" justify-center flex flex-col">
           <label onChange={e => handleChange(e)} htmlFor="formId">
             <input type="file" id="formId" hidden accept="image/*" />
 
-            <div><i className="fa-solid fa-cloud-arrow-up  text-9xl flex justify-center"></i>Select files to upload</div>
+            <div className="flex flex-col justify-center text-center"><i className="fa-solid fa-cloud-arrow-up   text-9xl flex justify-center"></i>Select files to upload</div>
           </label>
-          {fileUploaded && <div className="">
+          {fileUploaded && <div className="  ">
             <div classname="my-2"><LinearProgress variant="determinate" value={progress} /></div>
-            <div className="font-bold">Filename: <span className="font-light">{file.name}</span></div>
+            <div className="font-bold ">Filename: <span className="font-light">{file.name}</span></div>
             <div className="font-bold">Size: <span className="font-light">{fileSize(file)}{file.size > 1000000 ? "MB" : "KB"}</span></div>
             <div className="flex justify-center">
             {isSuccess ? <div className=" bg-[#c83349] px-8 py-3 font-bold  flex justify-center  rounded-md">Uploaded</div> : <button type="submit" className=" bg-[#e06377] px-8 py-3 font-bold  flex justify-center  rounded-md hover:bg-[#c83349]">Upload</button>}

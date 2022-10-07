@@ -30,12 +30,12 @@ const Hero = ({ slides }) => {
               key={index}
             >
               {index === current && (
-                <div>
+                <div className="flex justify-center items-center">
                   <img className="h-screen w-full opacity-70" alt="" src={slide.image} />
-                  <div className="absolute  top-1/3 flex text-center mx-40 text-6xl font-bold">
+                  <div className="absolute  sm:top-1/3 text-5xl flex text-center mx-40 sm:text-6xl font-semibold sm:font-bold">
                     {slide.title}
                   </div>
-                  <div className="absolute  top-2/4 mx-28 pt-8 flex text-center  text-lg font-semibold">
+                  <div className="absolute  md:top-2/4 mx-28 lg:pt-8 md:pt-16 flex text-center hidden md:block text-lg font-semibold">
                     {slide.desc}
                   </div>
                 </div>
@@ -44,9 +44,9 @@ const Hero = ({ slides }) => {
           );
         })}
 
-        <div className="absolute  top-2/3 flex left-1/3 right-1/3  pt-12 text-center justify-center  text-base font-semibold">
+        <div className="absolute  top-2/3 flex left-1/3 right-1/3  sm:pt-12 md:pt-26 pt-32  text-center justify-center  text-base font-semibold">
           {auth || <Link to="/accounts/signup">
-            <button className=" animate-bounce px-6 mx-1   rounded-md  py-3  hover:bg-[#c83349] bg-[#e06377]">
+            <button className=" animate-bounce sm:px-6 px-4  mx-1   rounded-md  py-3  hover:bg-[#c83349] bg-[#e06377]">
               Sign In
             </button>
           </Link>}

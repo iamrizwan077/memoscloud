@@ -31,7 +31,7 @@ const Profile = () => {
 
 
   //  console.log(user)
-  return (<div>
+  return (<div className='h-screen'>
     {user && 
     <div className='font-bold flex flex-col justify-center text-3xl'>
       <div>Username: {user.username}</div>

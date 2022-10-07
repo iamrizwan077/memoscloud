@@ -190,15 +190,15 @@ const Gallery = () => {
   
   
   return (
-  
-    <div className="grid-cols-3 grid gap-2 mx-4 my-4  ">
+  <div className="h-screen">
+    <div className="sm:grid-cols-3 grid gap-2 mx-4 my-4 grid-cols-2  ">
       {
         gallery.map((image,k) => (
           <div className="relative   " onMouseOver={e => handleHoverIn(e,k)}
           onMouseOut = {e => handleHoverOut(e,k)}> 
           <div key={k} className="  " onClick={e=>handleModal(e,k)}>
     
-            <img id={`image${k}`} className="w-full transition-1000 transition-opacity rounded-xl h-72 border-purple-800 " src={`http://localhost:8000${image.image}`} /> 
+            <img id={`image${k}`} className="w-full transition-1000 transition-opacity rounded-xl sm:h-72 h-56 border-purple-800 " src={`http://localhost:8000${image.image}`} /> 
             <div className="truncate  mx-4 my-1 ">{image.name}</div>
             </div>
             <i id={`delete${k}`} className="text-white fa-solid hidden delay-1000  fa-trash text-lg absolute top-3 right-3   " onClick={e=>handleDelete(e,k)}></i>
@@ -250,6 +250,7 @@ const Gallery = () => {
       <Img val="https://images.unsplash.com/photo-1657296950265-e17c3db4e85a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287&q=80" />
       <Img val="https://images.unsplash.com/photo-1657281277237-e1104ff6f18b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
     {*/}
+    </div>
     </div>
       
   );

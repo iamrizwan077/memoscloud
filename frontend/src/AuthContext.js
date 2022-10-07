@@ -206,7 +206,7 @@ const updateToken = async() => {
                 updateToken()
                 console.log("REQUEST SENT")
             }
-        }, 60000)
+        }, 300000)
         return () => clearInterval(interval)
         
     }, [authToken,loading])
